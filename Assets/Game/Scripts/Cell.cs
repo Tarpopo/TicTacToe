@@ -9,7 +9,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        SetSign(Signs.X);
+        SetSign(Signs.O);
     }
 
     public void SetSign(Signs sign)
