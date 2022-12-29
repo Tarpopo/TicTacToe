@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour, IPointerDownHandler
 {
+    public event Action<Signs> OnSetSign;
+    public Signs? Sign { get; private set; }
+
     [SerializeField] private Line _x;
     [SerializeField] private Line _o;
-    private Signs? _sign;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -14,10 +17,11 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
     public void SetSign(Signs sign)
     {
-        if (_sign != null) return;
-        _sign = sign;
+        if (Sign != null) return;
+        Sign = sign;
         if (sign == Signs.X) _x.DoAnimation();
         if (sign == Signs.O) _o.DoAnimation();
+        OnSetSign?.Invoke(sign);
     }
 
     private void Awake()
