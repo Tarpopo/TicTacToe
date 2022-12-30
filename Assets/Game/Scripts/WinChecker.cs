@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WinChecker : MonoBehaviour
@@ -25,126 +27,91 @@ public class WinChecker : MonoBehaviour
 
     private void GenerateWinMassive(int gridsSizes)
     {
-        _combination = new WinCombination();
-        _combination.AddCombinations(gridsSizes);
+        _combination = new WinCombination(gridsSizes);
         _combination.ShowAll();
     }
 }
 
-public class WinCombination
+public readonly struct WinCell
 {
-    private int[,] _winVertical;
-    private int[,] _winHorizontal;
-    private int[,] _diagonal;
+    private readonly int[] _winCombination;
+
+    public WinCell(int[] winCombination) => _winCombination = winCombination;
 
     public bool CheckWin(Cell[] cells, Signs sign)
     {
-        for (int i = 0; i < _winVertical.GetLength(0); i++)
-        {
-            var check = 0;
-            for (int j = 0; j < _winVertical.GetLength(1); j++)
-            {
-                if (cells[_winVertical[i, j]].Sign == sign) check++;
-                else
-                {
-                    check = 0;
-                    break;
-                }
-            }
-
-            if (check == _winVertical.GetLength(0))
-            {
-                return true;
-            }
-        }
-
-        // for (int i = 0; i < _winHorizontal.GetLength(0); i++)
-        // {
-        //     for (int j = 0; j < _winHorizontal.GetLength(1); j++)
-        //     {
-        //     }
-        // }
-
-        return false;
+        var check = _winCombination.Count(win => cells[win].Sign == sign);
+        return check == _winCombination.Length;
     }
 
-    public void AddVertical(int[,] vertical) => _winVertical = vertical;
-
-    public void AddHorizontal(int[,] horizontal) => _winHorizontal = horizontal;
-
-    public void AddDiagonals()
+    public void ShowMass()
     {
-    }
-
-    public void ShowAll()
-    {
-        _winHorizontal.PrintMass();
-        _winVertical.PrintMass();
+        var combination = _winCombination.Aggregate(string.Empty, (current, win) => current + win);
+        Debug.Log(combination);
     }
 }
 
-public static class WinCombinationsCalculator
+public struct WinCombination
 {
-    public static void PrintMass(this int[,] mass)
+    private readonly List<WinCell> _winCells;
+    public int GridSize { get; private set; }
+
+    public WinCombination(int gridSize)
     {
-        for (int i = 0; i < mass.GetLength(0); i++)
-        {
-            Debug.Log("//////////");
-            for (int j = 0; j < mass.GetLength(1); j++)
-            {
-                Debug.Log(mass[i, j]);
-            }
-        }
+        GridSize = gridSize;
+        _winCells = new List<WinCell>(GetWinElementsSize(GridSize));
+        AddHorizontalCombination();
+        AddVerticalCombination();
     }
 
-    public static void AddCombinations(this WinCombination win, int gridSize)
-    {
-        win.AddHorizontal(GetHorizontalCombinations(gridSize));
-        win.AddVertical(GetVerticalCombinations(gridSize));
-    }
+    public bool CheckWin(Cell[] cells, Signs sign) => _winCells.Any(winCell => winCell.CheckWin(cells, sign));
 
-    public static int[,] GetHorizontalCombinations(int gridSize)
+    public void ShowAll() => _winCells.ForEach(win => win.ShowMass());
+
+    private void AddCombination(WinCell win) => _winCells.Add(win);
+    private static int GetWinElementsSize(int gridSize) => gridSize * 2 + 2;
+
+    private void AddHorizontalCombination()
     {
-        var mass = new int[gridSize, gridSize];
         var previous = 0;
 
-        for (int j = 0; j < gridSize; j++)
+        for (int j = 0; j < GridSize; j++)
         {
-            for (int k = 0; k < gridSize; k++)
+            var mass = new int[GridSize];
+            for (int k = 0; k < GridSize; k++)
             {
-                mass[j, k] = previous;
+                mass[k] = previous;
                 previous++;
             }
-        }
 
-        return mass;
+            AddCombination(new WinCell(mass));
+        }
     }
 
-    public static int[,] GetVerticalCombinations(int gridSize)
+    private void AddVerticalCombination()
     {
-        var mass = new int[gridSize, gridSize];
         var previous = 0;
 
-        for (int j = 0; j < gridSize; j++)
+        for (int j = 0; j < GridSize; j++)
         {
-            for (int k = 0; k < gridSize; k++)
+            var mass = new int[GridSize];
+
+            for (int k = 0; k < GridSize; k++)
             {
                 if (k == 0)
                 {
                     previous = k + j;
-                    mass[j, k] = previous;
+                    mass[k] = previous;
                 }
 
                 else
                 {
-                    previous += gridSize;
-                    mass[j, k] = previous;
+                    previous += GridSize;
+                    mass[k] = previous;
                 }
             }
+
+            AddCombination(new WinCell(mass));
         }
-
-        return mass;
     }
-
-    private static int GetWinElementsSize(int gridSize) => gridSize * 2 + 2;
 }
