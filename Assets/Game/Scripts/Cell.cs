@@ -1,4 +1,5 @@
 using System;
+using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,22 +11,19 @@ public class Cell : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Line _x;
     [SerializeField] private Line _o;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        SetSign(Signs.O);
-    }
+    public void OnPointerDown(PointerEventData eventData) => SetSign(Signs.X, Toolbox.Get<Pens>().BluePen);
 
-    public void SetSign(Signs sign)
+    public void SetSign(Signs sign, Pen pen)
     {
         if (Sign != null) return;
         Sign = sign;
         switch (sign)
         {
             case Signs.X:
-                _x.DoAnimation();
+                _x.DoAnimation(pen);
                 break;
             case Signs.O:
-                _o.DoAnimation();
+                _o.DoAnimation(pen);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(sign), sign, null);

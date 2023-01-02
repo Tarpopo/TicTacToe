@@ -1,3 +1,4 @@
+using Tools;
 using UnityEngine;
 
 public class LineAnimation : MonoBehaviour
@@ -24,6 +25,6 @@ public class LineAnimation : MonoBehaviour
     public void DoAnimation()
     {
         _line.ClearLines();
-        _line.DoAnimation();
+        _line.DoAnimation(Toolbox.Get<Pens>().BluePen);
     }
 }

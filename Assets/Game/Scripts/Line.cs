@@ -20,9 +20,9 @@ public class Line
         foreach (var line in _linesData) line.LineRenderer.positionCount = 0;
     }
 
-    public void DoAnimation()
+    public void DoAnimation(Pen pen)
     {
-        Toolbox.Get<LinePainter>().Draw(_linesData, _duration);
+        Toolbox.Get<LinePainter>().Draw(pen, _linesData, _duration);
     }
 }
 
@@ -39,4 +39,6 @@ public class LineData
         Points = new Vector3[LineRenderer.positionCount];
         LineRenderer.GetPositions(Points);
     }
+
+    public void SetGradient(Gradient gradient) => LineRenderer.colorGradient = gradient;
 }
