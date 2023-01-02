@@ -19,8 +19,18 @@ public class Cell : MonoBehaviour, IPointerDownHandler
     {
         if (Sign != null) return;
         Sign = sign;
-        if (sign == Signs.X) _x.DoAnimation();
-        if (sign == Signs.O) _o.DoAnimation();
+        switch (sign)
+        {
+            case Signs.X:
+                _x.DoAnimation();
+                break;
+            case Signs.O:
+                _o.DoAnimation();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(sign), sign, null);
+        }
+
         OnSetSign?.Invoke(sign);
     }
 
