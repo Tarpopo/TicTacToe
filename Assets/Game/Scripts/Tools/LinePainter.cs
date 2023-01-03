@@ -1,21 +1,24 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class LinePainter : ManagerBase
 {
     public void Draw(Pen pen, LineData[] linesData, float duration, Action onEnd = null)
     {
-        pen.ActivePen();
-        foreach (var lineData in linesData) lineData.SetGradient(pen.PenGradient);
-        StartCoroutine(PenDrawCoroutine(pen.Transform, linesData, duration, () =>
+        pen.ActivePen(linesData[0].Transform.TransformPoint(linesData[0].Points[0]), () =>
         {
-            onEnd?.Invoke();
-            pen.DeactivatePen();
-        }));
+            foreach (var lineData in linesData) lineData.SetGradient(pen.PenGradient);
+            StartCoroutine(PenDrawCoroutine(pen.Transform, linesData, duration, () =>
+            {
+                onEnd?.Invoke();
+                pen.DeactivatePen();
+            }));
+        });
     }
 
-    private void SetLinePosition(LineRenderer line, Vector3 position, int index)
+    private static void SetLinePosition(LineRenderer line, Vector3 position, int index)
     {
         line.positionCount = index + 1;
         line.SetPosition(index, position);
@@ -35,15 +38,12 @@ public class LinePainter : ManagerBase
     private IEnumerator DoPathMove(Transform moving, Transform lineTransform, float duration, Vector3[] points,
         Action<Vector3, int> onPointMoveEnd)
     {
-        for (int i = 0; i < points.Length; i++)
-        {
-            yield return StartCoroutine(DoMove(moving, duration, moving.position,
-                lineTransform.TransformPoint(points[i]),
-                () => onPointMoveEnd?.Invoke(points[i], i)));
-        }
+        return points.Select((t, i) => StartCoroutine(DoMove(moving, duration, moving.position,
+            lineTransform.TransformPoint(t),
+            () => onPointMoveEnd?.Invoke(t, i)))).GetEnumerator();
     }
 
-    private static IEnumerator DoMove(Transform moving, float duration, Vector3 from, Vector3 to, Action onEnd)
+    public static IEnumerator DoMove(Transform moving, float duration, Vector3 from, Vector3 to, Action onEnd)
     {
         for (var time = 0f; time <= 1f; time += Time.deltaTime / duration)
         {

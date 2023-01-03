@@ -20,9 +20,9 @@ public class Line
         foreach (var line in _linesData) line.LineRenderer.positionCount = 0;
     }
 
-    public void DoAnimation(Pen pen)
+    public void DoAnimation(Pen pen, Action onEnd = null)
     {
-        Toolbox.Get<LinePainter>().Draw(pen, _linesData, _duration);
+        Toolbox.Get<LinePainter>().Draw(pen, _linesData, _duration, onEnd);
     }
 }
 

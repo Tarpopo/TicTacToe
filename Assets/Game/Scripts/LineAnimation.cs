@@ -1,8 +1,10 @@
+using DG.Tweening;
 using Tools;
 using UnityEngine;
 
 public class LineAnimation : MonoBehaviour
 {
+    [SerializeField] private PenType _penType = PenType.Blue;
     [SerializeField] private Line _line;
     [SerializeField] private bool _doOnEnable;
     [SerializeField] private bool _doOnStart;
@@ -25,6 +27,6 @@ public class LineAnimation : MonoBehaviour
     public void DoAnimation()
     {
         _line.ClearLines();
-        _line.DoAnimation(Toolbox.Get<Pens>().BluePen);
+        _line.DoAnimation(Toolbox.Get<Pens>().GetPen(_penType));
     }
 }
