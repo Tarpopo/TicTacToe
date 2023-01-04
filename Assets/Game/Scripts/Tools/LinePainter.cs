@@ -28,6 +28,8 @@ public class LinePainter : ManagerBase
     {
         foreach (var lineData in linesData)
         {
+            yield return StartCoroutine(DoMove(pen, duration * 20, pen.position,
+                lineData.Transform.TransformPoint(lineData.Points[0])));
             yield return StartCoroutine(DoPathMove(pen, lineData.Transform, duration, lineData.Points,
                 (position, index) => SetLinePosition(lineData.LineRenderer, position, index)));
         }
@@ -43,7 +45,7 @@ public class LinePainter : ManagerBase
             () => onPointMoveEnd?.Invoke(t, i)))).GetEnumerator();
     }
 
-    public static IEnumerator DoMove(Transform moving, float duration, Vector3 from, Vector3 to, Action onEnd)
+    public static IEnumerator DoMove(Transform moving, float duration, Vector3 from, Vector3 to, Action onEnd = null)
     {
         for (var time = 0f; time <= 1f; time += Time.deltaTime / duration)
         {

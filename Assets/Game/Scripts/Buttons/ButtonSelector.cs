@@ -1,26 +1,21 @@
-using System;
+using Tools;
 using UnityEngine;
 
-public class ButtonSelector : MonoBehaviour
+public class ButtonSelector : BaseButtonSelector
 {
-    [SerializeField] private BaseButton[] _buttons;
-    private bool _isButtonSelected;
+    [SerializeField] private SelectButton _selectedButton;
 
-    private void Awake()
+    protected override void Start() => _selectedButton.Select(Toolbox.Get<Pens>().BluePen);
+
+    protected override void OnDisable()
     {
-        foreach (var button in _buttons) button.OnButtonDown += TrySelectButton;
     }
 
-    private void OnDestroy()
+    protected override void TrySelectButton(BaseButton button)
     {
-        foreach (var button in _buttons) button.OnButtonDown -= TrySelectButton;
-    }
-
-    private void TrySelectButton(BaseButton button)
-    {
-        if (_isButtonSelected) return;
-        _isButtonSelected = true;
         var select = (SelectButton)button;
-        select.DoSelectAnimation();
+        if (select.IsSelect) return;
+        DeselectAll();
+        select.Select(Toolbox.Get<Pens>().PlayerPen);
     }
 }

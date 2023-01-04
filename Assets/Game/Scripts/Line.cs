@@ -9,6 +9,12 @@ public class Line
     [SerializeField] private float _duration;
     private LineData[] _linesData;
 
+    public void SetParameters(LineRenderer[] lineRenderers)
+    {
+        _linesData = new LineData[lineRenderers.Length];
+        for (int i = 0; i < lineRenderers.Length; i++) _linesData[i] = new LineData(lineRenderers[i]);
+    }
+
     public void SetParameters()
     {
         _linesData = new LineData[_lineRenderers.Length];

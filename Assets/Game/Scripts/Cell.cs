@@ -11,7 +11,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Line _x;
     [SerializeField] private Line _o;
 
-    public void OnPointerDown(PointerEventData eventData) => SetSign(Signs.X, Toolbox.Get<Pens>().BluePen);
+    public void OnPointerDown(PointerEventData eventData) => SetSign(Signs.X, Toolbox.Get<Pens>().PlayerPen);
 
     public void SetSign(Signs sign, Pen pen)
     {

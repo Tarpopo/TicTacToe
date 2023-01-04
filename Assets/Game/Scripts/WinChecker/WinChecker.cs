@@ -26,7 +26,7 @@ public class WinChecker : MonoBehaviour
     private void GenerateWinMassive(int gridsSizes)
     {
         _combination = new WinCombination(gridsSizes);
-        _combination.ShowAll();
+        // _combination.ShowAll();
     }
 }
 

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using Tools;
 using UnityEngine;
 
@@ -8,10 +7,12 @@ public class LineAnimation : MonoBehaviour
     [SerializeField] private Line _line;
     [SerializeField] private bool _doOnEnable;
     [SerializeField] private bool _doOnStart;
+    [SerializeField] private bool _getComponents = true;
 
     private void Awake()
     {
-        _line.SetParameters();
+        if (_getComponents) _line.SetParameters(GetComponentsInChildren<LineRenderer>());
+        else _line.SetParameters();
     }
 
     private void OnEnable()
