@@ -18,43 +18,60 @@ public class MatchMaker : MonoBehaviour
     {
         var pens = Toolbox.Get<Pens>();
         var grid = Toolbox.Get<Grids>().CurrentGrid;
+        UnSubscribeFromCells();
+
         switch (_matchSettings)
         {
             case MatchSettings.PLvsPC:
                 _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grid);
                 _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grid);
-                _firstPlayer.OnDoStep += _secondPlayer.DoStep;
-                _currentPlayer = _firstPlayer;
+                _firstPlayer.OnDoStep += DoStep;
+                SubscribeToCells();
                 break;
             case MatchSettings.PLvsPL:
+                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grid);
+                _secondPlayer = new HumanPlayer(pens.PlayerPen, Signs.O, grid);
+                SubscribeToCells();
                 break;
             case MatchSettings.PCvsPC:
+                _firstPlayer = new AIPlayer(pens.RedPen, Signs.X, grid);
+                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grid);
+                _firstPlayer.OnDoStep += DoStep;
+                _secondPlayer.OnDoStep += DoStep;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        _currentPlayer = _firstPlayer;
+        if (_currentPlayer is AIPlayer) DoStep();
     }
 
-    // private void TryDoStep(Cell cell)
-    // {
-    //     if (_currentPlayer.IsPlaying || _currentPlayer is AIPlayer) return;
-    //     _currentPlayer.DoStep(cell);
-    // }
-    //
-    // private void TryDoAIStep()
-    // {
-    //     if (_currentPlayer.IsPlaying || _currentPlayer is HumanPlayer) return;
-    //     var cell = _grids.CurrentGrid.Cells.FirstOrDefault(cell => cell.Sign == null);
-    //     if (cell == default) return;
-    //     _currentPlayer.DoStep(_grids.CurrentGrid.Cells.FirstOrDefault(cell => cell.Sign == null));
-    // }
+    private void Start() => _grids.Enable3X3();
 
-    private void SwitchPlayer() => _currentPlayer = _currentPlayer == _firstPlayer ? _secondPlayer : _firstPlayer;
-
-    private void Start()
+    private void SubscribeToCells()
     {
-        _grids.Enable3X3();
+        foreach (var cell in _grids.CurrentGrid.Cells) cell.OnDown += DoStep;
     }
+
+    private void UnSubscribeFromCells()
+    {
+        foreach (var cell in _grids.CurrentGrid.Cells) cell.OnDown -= DoStep;
+    }
+
+    private void DoStep(Cell cell)
+    {
+        _currentPlayer.DoStep(cell);
+        SwitchPlayer();
+    }
+
+    private void DoStep()
+    {
+        _currentPlayer.DoStep();
+        SwitchPlayer();
+    }
+
+    private void SwitchPlayer() => _currentPlayer = _currentPlayer.Equals(_firstPlayer) ? _secondPlayer : _firstPlayer;
 }
 
 public enum MatchSettings

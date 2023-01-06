@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class Cell : MonoBehaviour, IPointerDownHandler
 {
     public event Action<Cell> OnDown;
+    public event Action<Signs> OnSetSign;
     public Signs? Sign { get; private set; }
 
     [SerializeField] private Line _x;
@@ -31,7 +32,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
                 throw new ArgumentOutOfRangeException(nameof(sign), sign, null);
         }
 
-        // OnSetSign?.Invoke(sign);
+        OnSetSign?.Invoke(sign);
     }
 
     private void Awake()

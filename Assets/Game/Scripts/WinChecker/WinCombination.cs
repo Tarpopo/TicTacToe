@@ -16,7 +16,11 @@ public struct WinCombination
         AddLeftDiagonal();
     }
 
-    public bool CheckWin(Cell[] cells, Signs sign) => _winCells.Any(winCell => winCell.CheckWin(cells, sign));
+    public bool CheckWin(Cell[] cells, Signs sign, out WinCell winCell)
+    {
+        winCell = _winCells.FirstOrDefault(item => item.CheckWin(cells, sign));
+        return winCell != default;
+    }
 
     public void ShowAll() => _winCells.ForEach(win => win.ShowMass());
 

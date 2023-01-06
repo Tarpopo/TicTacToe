@@ -15,6 +15,12 @@ public class Line
         for (int i = 0; i < lineRenderers.Length; i++) _linesData[i] = new LineData(lineRenderers[i]);
     }
 
+    public void SetParameters(Vector3[] points)
+    {
+        _linesData = new LineData[1];
+        _linesData[0] = new LineData(_lineRenderers[0], points);
+    }
+
     public void SetParameters()
     {
         _linesData = new LineData[_lineRenderers.Length];
@@ -44,6 +50,13 @@ public class LineData
         LineRenderer = lineRenderer;
         Points = new Vector3[LineRenderer.positionCount];
         LineRenderer.GetPositions(Points);
+    }
+
+    public LineData(LineRenderer lineRenderer, Vector3[] points)
+    {
+        LineRenderer = lineRenderer;
+        Points = new Vector3[points.Length];
+        Points = points;
     }
 
     public void SetGradient(Gradient gradient) => LineRenderer.colorGradient = gradient;

@@ -17,8 +17,8 @@ public abstract record BasePlayer
 
     public virtual void DoStep(Cell cell)
     {
-        if (MatchStates.PlayerPlaying) return;
-        MatchStates.EnablePlayerPlayingState(this);
+        if (MatchStates.Free == false) return;
+        MatchStates.SetPlayerDrawingState(this);
         cell.SetSign(_sign, _playerPen, () =>
         {
             MatchStates.DisablePlayerPlayingState(this);
@@ -28,7 +28,7 @@ public abstract record BasePlayer
 
     public virtual void DoStep()
     {
-        if (MatchStates.PlayerPlaying) return;
+        if (MatchStates.Free == false) return;
         var cell = _grid.Cells.FirstOrDefault(cell => cell.Sign == null);
         if (cell == default) return;
         DoStep(cell);
