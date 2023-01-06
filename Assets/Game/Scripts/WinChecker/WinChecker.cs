@@ -1,13 +1,17 @@
+using Tools;
 using UnityEngine;
 
-public class WinChecker : MonoBehaviour
+public class WinChecker : ManagerBase
 {
     [SerializeField] private int _gridsSizes;
+
     // [SerializeField] private Cell[] _cells;
     private WinCombination _combination;
+    private Grids _grids;
 
     private void Start()
     {
+        _grids = Toolbox.Get<Grids>();
         GenerateWinMassive(_gridsSizes);
         // foreach (var cell in _cells)
         // {
@@ -17,10 +21,10 @@ public class WinChecker : MonoBehaviour
 
     private void CheckWin(Signs sign)
     {
-        // if (_combination.CheckWin(_cells, sign))
-        // {
-        //     print("You win");
-        // }
+        if (_combination.CheckWin(_grids.CurrentGrid.Cells, sign))
+        {
+            print("Win");
+        }
     }
 
     private void GenerateWinMassive(int gridsSizes)
@@ -29,4 +33,3 @@ public class WinChecker : MonoBehaviour
         // _combination.ShowAll();
     }
 }
-

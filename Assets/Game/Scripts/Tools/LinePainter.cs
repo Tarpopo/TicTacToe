@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LinePainter : ManagerBase
 {
+    private static readonly WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
+
     public void Draw(Pen pen, LineData[] linesData, float duration, Action onEnd = null)
     {
         pen.ActivePen(linesData[0].Transform.TransformPoint(linesData[0].Points[0]), () =>
@@ -47,7 +49,7 @@ public class LinePainter : ManagerBase
 
     public static IEnumerator DoMove(Transform moving, float duration, Vector3 from, Vector3 to, Action onEnd = null)
     {
-        for (var time = 0f; time <= 1f; time += Time.deltaTime / duration)
+        for (float time = 0f; time <= 1f; time += Time.deltaTime / duration)
         {
             moving.position = Vector3.Lerp(from, to, time);
             yield return null;
