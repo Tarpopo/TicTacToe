@@ -16,20 +16,19 @@ public abstract record BasePlayer
         _grid = grid;
     }
 
-    public void DoStep(Cell cell)
+    public void DoStep(Cell cell, Action onEnd)
     {
-        MatchStates.SetPlayerDrawingState(this);
         cell.SetSign(_sign, _playerPen, () =>
         {
-            MatchStates.DisablePlayerDrawingState(this);
+            onEnd?.Invoke();
             OnDoStep?.Invoke();
         });
     }
 
-    public void DoStep()
+    public void DoStep(Action onEnd)
     {
         var cell = _grid.Cells.FirstOrDefault(cell => cell.Sign == null);
         if (cell == default) return;
-        DoStep(cell);
+        DoStep(cell, onEnd);
     }
 }

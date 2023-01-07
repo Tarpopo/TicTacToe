@@ -63,18 +63,19 @@ public class MatchMaker : ManagerBase
     private void DoStep(Cell cell)
     {
         if (_currentPlayer.IsFree == false || MatchStates.Free == false) return;
-        _currentPlayer.DoStep(cell);
-        SwitchPlayer();
+        _currentPlayer.DoStep(cell, SwitchPlayer);
     }
 
     private void DoStep()
     {
         if (_currentPlayer.IsFree == false || MatchStates.Free == false) return;
-        _currentPlayer.DoStep();
-        SwitchPlayer();
+        _currentPlayer.DoStep(SwitchPlayer);
     }
 
-    private void SwitchPlayer() => _currentPlayer = _currentPlayer.Equals(_firstPlayer) ? _secondPlayer : _firstPlayer;
+    private void SwitchPlayer()
+    {
+        _currentPlayer = _currentPlayer.Equals(_firstPlayer) ? _secondPlayer : _firstPlayer;
+    }
 }
 
 public enum MatchSettings

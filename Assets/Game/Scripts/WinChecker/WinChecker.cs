@@ -18,18 +18,20 @@ public class WinChecker : ManagerBase, IStart
         {
             foreach (var cell in grid.Cells)
             {
-                cell.OnSetSign += CheckWin;
+                cell.OnSetSign += TrySetWin;
             }
         }
     }
 
     public void Clear() => _winLine.ClearLines();
 
-    private void CheckWin(Signs sign)
+    private void TrySetWin(Signs sign)
     {
-        if (_grids.CurrentGrid.TryGetWinCombination(sign, out var cells) == false) return;
+        if (_grids.CurrentGrid.TryGetWinCellsCombination(sign, out var cells) == false) return;
         _winLine.SetParameters(cells.Select(item => item.transform.position).ToArray());
         _winLine.DoAnimation(_pens.RedPen);
         MatchStates.SetMatchEnded();
     }
+
+    private bool CheckWin(Signs sign) => _grids.CurrentGrid.CheckWin(sign);
 }

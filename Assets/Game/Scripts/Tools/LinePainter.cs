@@ -6,16 +6,12 @@ using UnityEngine;
 
 public class LinePainter : ManagerBase
 {
-
     public void Draw(Pen pen, LineData[] linesData, float duration, Action onEnd = null)
     {
         pen.ActivePen(linesData[0].Transform.TransformPoint(linesData[0].Points[0]), () =>
         {
             foreach (var lineData in linesData) lineData.SetGradient(pen.PenGradient);
-            StartCoroutine(PenDrawCoroutine(pen.Transform, linesData, duration, () =>
-            {
-                pen.DeactivatePen(onEnd);
-            }));
+            StartCoroutine(PenDrawCoroutine(pen.Transform, linesData, duration, () => { pen.DeactivatePen(onEnd); }));
         });
     }
 
@@ -29,9 +25,7 @@ public class LinePainter : ManagerBase
     {
         foreach (var lineData in linesData)
         {
-            yield return StartCoroutine(DoMove(pen, duration * 40,
-                lineData.Transform.TransformPoint(lineData.Points[0])));
-            yield return StartCoroutine(DoPathMove(pen, lineData.Transform, duration, lineData.Points,
+            yield return StartCoroutine(DoPath(pen, lineData.Transform, duration, lineData.Points,
                 (position, index) => SetLinePosition(lineData.LineRenderer, position, index)));
         }
 
@@ -50,5 +44,18 @@ public class LinePainter : ManagerBase
         var tween = moving.DOMove(to, duration);
         yield return tween.WaitForCompletion();
         onEnd?.Invoke();
+    }
+
+    private IEnumerator DoPath(Transform moving, Transform lineTransform, float duration, Vector3[] points,
+        Action<Vector3, int> onPointMoveEnd)
+    {
+        var transformPoints = points.Select(lineTransform.TransformPoint).ToArray();
+        var tween = moving.DOPath(transformPoints, duration, PathType.Linear, PathMode.Ignore);
+        tween.onWaypointChange += (index) =>
+        {
+            if (index.Equals(points.Length)) return;
+            onPointMoveEnd?.Invoke(points[index], index);
+        };
+        yield return tween.WaitForCompletion();
     }
 }

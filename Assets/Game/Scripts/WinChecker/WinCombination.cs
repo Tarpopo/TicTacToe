@@ -22,6 +22,8 @@ public struct WinCombination
         return winCell != default;
     }
 
+    public bool CheckWin(Cell[] cells, Signs sign) => _winCells.Any(item => item.CheckWin(cells, sign));
+
     public void ShowAll() => _winCells.ForEach(win => win.ShowMass());
 
     private void AddCombination(WinCell win) => _winCells.Add(win);

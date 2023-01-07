@@ -44,7 +44,7 @@ public class Grid
     public void SetCombination(int size) => WinCombination = new WinCombination(size);
     public void SetActive(bool active) => _grid.SetActive(active);
 
-    public bool TryGetWinCombination(Signs sign, out Cell[] cells)
+    public bool TryGetWinCellsCombination(Signs sign, out Cell[] cells)
     {
         cells = default;
         if (WinCombination.CheckWin(_cells, sign, out var winCell) == false) return false;
@@ -52,6 +52,8 @@ public class Grid
         for (int i = 0; i < winCell.WinCombination.Length; i++) cells[i] = _cells[winCell.WinCombination[i]];
         return true;
     }
+
+    public bool CheckWin(Signs sign) => WinCombination.CheckWin(_cells, sign);
 
     public void ClearCells()
     {
