@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseButtonSelector : MonoBehaviour
 {
-    private SelectButton[] _buttons;
+    protected SelectButton[] _buttons;
 
     private void Awake()
     {

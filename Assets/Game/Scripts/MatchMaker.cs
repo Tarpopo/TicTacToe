@@ -2,7 +2,7 @@ using System;
 using Tools;
 using UnityEngine;
 
-public class MatchMaker : MonoBehaviour
+public class MatchMaker : ManagerBase
 {
     [SerializeField] private Grids _grids;
     private MatchSettings _matchSettings = MatchSettings.PLvsPC;
@@ -17,25 +17,26 @@ public class MatchMaker : MonoBehaviour
     public void CreateMatch()
     {
         var pens = Toolbox.Get<Pens>();
-        var grid = Toolbox.Get<Grids>().CurrentGrid;
+        var grids = Toolbox.Get<Grids>().CurrentGrid;
         UnSubscribeFromCells();
-
+        grids.ClearCells();
+        MatchStates.SetMatchFree();
         switch (_matchSettings)
         {
             case MatchSettings.PLvsPC:
-                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grid);
-                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grid);
+                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grids);
+                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grids);
                 _firstPlayer.OnDoStep += DoStep;
                 SubscribeToCells();
                 break;
             case MatchSettings.PLvsPL:
-                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grid);
-                _secondPlayer = new HumanPlayer(pens.PlayerPen, Signs.O, grid);
+                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grids);
+                _secondPlayer = new HumanPlayer(pens.PlayerPen, Signs.O, grids);
                 SubscribeToCells();
                 break;
             case MatchSettings.PCvsPC:
-                _firstPlayer = new AIPlayer(pens.RedPen, Signs.X, grid);
-                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grid);
+                _firstPlayer = new AIPlayer(pens.RedPen, Signs.X, grids);
+                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grids);
                 _firstPlayer.OnDoStep += DoStep;
                 _secondPlayer.OnDoStep += DoStep;
                 break;
@@ -61,12 +62,14 @@ public class MatchMaker : MonoBehaviour
 
     private void DoStep(Cell cell)
     {
+        if (MatchStates.Free == false) return;
         _currentPlayer.DoStep(cell);
         SwitchPlayer();
     }
 
     private void DoStep()
     {
+        if (MatchStates.Free == false) return;
         _currentPlayer.DoStep();
         SwitchPlayer();
     }

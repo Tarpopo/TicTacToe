@@ -11,9 +11,12 @@ public class Cell : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Line _x;
     [SerializeField] private Line _o;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData) => OnDown?.Invoke(this);
+
+    public void ClearCell()
     {
-        OnDown?.Invoke(this);
+        Sign = null;
+        ClearLines();
     }
 
     public void SetSign(Signs sign, Pen pen, Action onSignSet)
@@ -38,8 +41,12 @@ public class Cell : MonoBehaviour, IPointerDownHandler
     private void Awake()
     {
         _x.SetParameters();
-        _x.ClearLines();
         _o.SetParameters();
+    }
+
+    private void ClearLines()
+    {
+        _x.ClearLines();
         _o.ClearLines();
     }
 }

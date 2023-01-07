@@ -15,9 +15,8 @@ public abstract record BasePlayer
         _grid = grid;
     }
 
-    public virtual void DoStep(Cell cell)
+    public void DoStep(Cell cell)
     {
-        if (MatchStates.Free == false) return;
         MatchStates.SetPlayerDrawingState(this);
         cell.SetSign(_sign, _playerPen, () =>
         {
@@ -26,9 +25,8 @@ public abstract record BasePlayer
         });
     }
 
-    public virtual void DoStep()
+    public void DoStep()
     {
-        if (MatchStates.Free == false) return;
         var cell = _grid.Cells.FirstOrDefault(cell => cell.Sign == null);
         if (cell == default) return;
         DoStep(cell);

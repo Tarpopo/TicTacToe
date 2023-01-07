@@ -17,4 +17,10 @@ public class OnceSelector : BaseButtonSelector
         var select = (SelectButton)button;
         select.Select(Toolbox.Get<Pens>().PlayerPen);
     }
+
+    public void ClearSelection()
+    {
+        _isButtonSelected = false;
+        DeselectAll();
+    }
 }

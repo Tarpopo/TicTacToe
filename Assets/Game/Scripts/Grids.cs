@@ -18,6 +18,11 @@ public class Grids : ManagerBase, IStart
         CurrentGrid.SetActive(true);
     }
 
+    public void ClearAllGrids()
+    {
+        foreach (var grid in _grids) grid.ClearCells();
+    }
+
     public void Enable3X3() => EnableGrid(GridType.ThreeXThree);
     public void Enable5X5() => EnableGrid(GridType.FiveXFive);
 
@@ -46,6 +51,11 @@ public class Grid
         cells = new Cell[WinCombination.GridSize];
         for (int i = 0; i < winCell.WinCombination.Length; i++) cells[i] = _cells[winCell.WinCombination[i]];
         return true;
+    }
+
+    public void ClearCells()
+    {
+        foreach (var cell in _cells) cell.ClearCell();
     }
 }
 
