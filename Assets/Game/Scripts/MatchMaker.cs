@@ -62,14 +62,14 @@ public class MatchMaker : ManagerBase
 
     private void DoStep(Cell cell)
     {
-        if (MatchStates.Free == false) return;
+        if (_currentPlayer.IsFree == false || MatchStates.Free == false) return;
         _currentPlayer.DoStep(cell);
         SwitchPlayer();
     }
 
     private void DoStep()
     {
-        if (MatchStates.Free == false) return;
+        if (_currentPlayer.IsFree == false || MatchStates.Free == false) return;
         _currentPlayer.DoStep();
         SwitchPlayer();
     }

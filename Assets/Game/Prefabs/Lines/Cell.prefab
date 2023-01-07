@@ -104,11 +104,11 @@ MonoBehaviour:
     _lineRenderers:
     - {fileID: 5063146161710125844}
     - {fileID: 5063146162000377322}
-    _duration: 0.01
+    _duration: 0.002
   _o:
     _lineRenderers:
     - {fileID: 6084591985369927193}
-    _duration: 0.01
+    _duration: 0.002
 --- !u!61 &-2978614280157935887
 BoxCollider2D:
   m_ObjectHideFlags: 0

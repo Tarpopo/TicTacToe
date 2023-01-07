@@ -3,6 +3,7 @@ using System.Linq;
 
 public abstract record BasePlayer
 {
+    public bool IsFree => _playerPen.IsFree;
     public event Action OnDoStep;
     protected Pen _playerPen;
     protected Signs _sign;
@@ -20,7 +21,7 @@ public abstract record BasePlayer
         MatchStates.SetPlayerDrawingState(this);
         cell.SetSign(_sign, _playerPen, () =>
         {
-            MatchStates.DisablePlayerPlayingState(this);
+            MatchStates.DisablePlayerDrawingState(this);
             OnDoStep?.Invoke();
         });
     }

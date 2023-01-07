@@ -2155,6 +2155,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3302,7 +3306,7 @@ MonoBehaviour:
   _penType: 0
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.005
   _doOnEnable: 0
   _doOnStart: 1
   _getComponents: 1
@@ -4181,6 +4185,10 @@ PrefabInstance:
     - target: {fileID: 913936770760090293, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
@@ -15120,7 +15128,7 @@ MonoBehaviour:
   _penType: 1
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.005
   _doOnEnable: 0
   _doOnStart: 1
   _getComponents: 1
@@ -16912,6 +16920,10 @@ PrefabInstance:
     - target: {fileID: 913936770760090293, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
@@ -20642,7 +20654,7 @@ MonoBehaviour:
   _penType: 0
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.009
   _doOnEnable: 1
   _doOnStart: 0
   _getComponents: 1
@@ -21826,7 +21838,7 @@ MonoBehaviour:
   _winLine:
     _lineRenderers:
     - {fileID: 1890515957}
-    _duration: 0.01
+    _duration: 0.004
 --- !u!1001 &954053847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29922,6 +29934,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -32771,7 +32787,7 @@ MonoBehaviour:
   _penType: 1
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.005
   _doOnEnable: 0
   _doOnStart: 1
   _getComponents: 1
@@ -35604,7 +35620,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  _showHideDuration: 0.2
+  _showDuration: 0.005
+  _hideDuration: 0.005
 --- !u!1001 &1478132965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37827,6 +37844,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -37959,6 +37980,10 @@ PrefabInstance:
     - target: {fileID: 913936770760090293, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
@@ -41991,7 +42016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1625354097
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42389,6 +42414,10 @@ PrefabInstance:
     - target: {fileID: 913936770760090293, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
@@ -47623,7 +47652,7 @@ MonoBehaviour:
     - {fileID: 272376563}
     - {fileID: 1081952525}
     - {fileID: 529396707}
-    _duration: 0.005
+    _duration: 0.001
   _doOnEnable: 1
   _doOnStart: 0
   _getComponents: 0
@@ -52318,7 +52347,7 @@ MonoBehaviour:
   _penType: 1
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.009
   _doOnEnable: 1
   _doOnStart: 0
   _getComponents: 1
@@ -52430,7 +52459,7 @@ MonoBehaviour:
   _penType: 0
   _line:
     _lineRenderers: []
-    _duration: 0.01
+    _duration: 0.005
   _doOnEnable: 0
   _doOnStart: 1
   _getComponents: 1
@@ -54178,7 +54207,7 @@ MonoBehaviour:
     - {fileID: 1825544121}
     - {fileID: 2032290484}
     - {fileID: 1611415435}
-    _duration: 0.005
+    _duration: 0.002
   _doOnEnable: 1
   _doOnStart: 0
   _getComponents: 0
@@ -56674,6 +56703,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -56897,6 +56930,10 @@ PrefabInstance:
     - target: {fileID: 913936770760090293, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
+      propertyPath: _selectLine._duration
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 913936770760090294, guid: 70297c8eb76f26b4684f4e9c964cd52e, type: 3}
       propertyPath: _onSelect.m_PersistentCalls.m_Calls.Array.size

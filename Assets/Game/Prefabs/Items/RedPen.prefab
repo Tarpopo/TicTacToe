@@ -211,4 +211,5 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  _showHideDuration: 0.7
+  _showDuration: 0.7
+  _hideDuration: 0.4
