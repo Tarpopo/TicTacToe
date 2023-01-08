@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
+using Random = System.Random;
 
 public class Grids : ManagerBase, IStart
 {
@@ -37,11 +38,20 @@ public class Grids : ManagerBase, IStart
 public class Grid
 {
     public WinCombination WinCombination { get; private set; }
+    public int GridSize { get; private set; }
 
     public Cell[] Cells => _cells;
+    public Cell RandomFreeCell => _cells.Where(cell => cell.Sign == null).GetRandomElement();
+    public Signs?[] Signs => _cells.Select(cell => cell.Sign).ToArray();
     [SerializeField] private GameObject _grid;
     [SerializeField] private Cell[] _cells;
-    public void SetCombination(int size) => WinCombination = new WinCombination(size);
+
+    public void SetCombination(int size)
+    {
+        GridSize = size;
+        WinCombination = new WinCombination(size);
+    }
+
     public void SetActive(bool active) => _grid.SetActive(active);
 
     public bool TryGetWinCellsCombination(Signs sign, out Cell[] cells)
@@ -54,6 +64,8 @@ public class Grid
     }
 
     public bool CheckWin(Signs sign) => WinCombination.CheckWin(_cells, sign);
+
+    public bool CheckWin(Signs sign, Signs?[] cells) => WinCombination.CheckWin(sign, cells);
 
     public void ClearCells()
     {

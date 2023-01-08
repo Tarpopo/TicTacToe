@@ -33,5 +33,7 @@ public class WinChecker : ManagerBase, IStart
         MatchStates.SetMatchEnded();
     }
 
-    private bool CheckWin(Signs sign) => _grids.CurrentGrid.CheckWin(sign);
+    public bool CheckWin(Signs sign) => _grids.CurrentGrid.CheckWin(sign);
+
+    public bool CheckWin(Signs?[] cells, Signs sign) => _grids.CurrentGrid.CheckWin(sign, cells);
 }

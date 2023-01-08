@@ -25,10 +25,8 @@ public abstract record BasePlayer
         });
     }
 
-    public void DoStep(Action onEnd)
+    public virtual void DoStep(Action onEnd)
     {
-        var cell = _grid.Cells.FirstOrDefault(cell => cell.Sign == null);
-        if (cell == default) return;
-        DoStep(cell, onEnd);
+        
     }
 }

@@ -13,6 +13,12 @@ public class WinCell
         return check == WinCombination.Length;
     }
 
+    public bool CheckWin(Signs sign, Signs?[] cells)
+    {
+        var check = WinCombination.Count(win => cells[win] == sign);
+        return check == WinCombination.Length;
+    }
+
     public void ShowMass()
     {
         var combination = WinCombination.Aggregate(string.Empty, (current, win) => current + win);
