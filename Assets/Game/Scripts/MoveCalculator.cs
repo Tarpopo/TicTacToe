@@ -1,6 +1,5 @@
 using System;
 using Tools;
-using UnityEngine;
 
 public static class MoveCalculator
 {
@@ -132,9 +131,4 @@ public static class MoveCalculator
 
         return bestCellIndex;
     }
-}
-
-public class Move
-{
-    public int row, col;
 }

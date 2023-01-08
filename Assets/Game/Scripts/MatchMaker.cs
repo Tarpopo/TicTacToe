@@ -9,10 +9,23 @@ public class MatchMaker : ManagerBase
     private BasePlayer _firstPlayer;
     private BasePlayer _secondPlayer;
     private BasePlayer _currentPlayer;
-
+    private Signs _humanSign = Signs.X;
+    private bool _isHumanFirst = true;
     public void SetPLvsPC() => _matchSettings = MatchSettings.PLvsPC;
     public void SetPLvsPL() => _matchSettings = MatchSettings.PLvsPL;
     public void SetPCvsPC() => _matchSettings = MatchSettings.PCvsPC;
+
+    public void SetHumanStep(bool isFirst) => _isHumanFirst = isFirst;
+
+    public void EndMatch()
+    {
+        var grids = Toolbox.Get<Grids>().CurrentGrid;
+        UnSubscribeFromCells();
+        grids.ClearCells();
+        MatchStates.SetMatchEnded();
+    }
+
+    public void SetMainSign(int signIndex) => _humanSign = (Signs)signIndex;
 
     public void CreateMatch()
     {
@@ -24,14 +37,24 @@ public class MatchMaker : ManagerBase
         switch (_matchSettings)
         {
             case MatchSettings.PLvsPC:
-                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grids);
-                _secondPlayer = new AIPlayer(pens.BluePen, Signs.O, grids);
-                _firstPlayer.OnDoStep += DoStep;
+                if (_isHumanFirst)
+                {
+                    _firstPlayer = new HumanPlayer(pens.PlayerPen, _humanSign, grids);
+                    _secondPlayer = new AIPlayer(pens.BluePen, _humanSign.GetOtherSign(), grids);
+                    _firstPlayer.OnDoStep += DoStep;
+                }
+                else
+                {
+                    _firstPlayer = new AIPlayer(pens.BluePen, _humanSign.GetOtherSign(), grids);
+                    _secondPlayer = new HumanPlayer(pens.PlayerPen, _humanSign, grids);
+                    _secondPlayer.OnDoStep += DoStep;
+                }
+
                 SubscribeToCells();
                 break;
             case MatchSettings.PLvsPL:
-                _firstPlayer = new HumanPlayer(pens.PlayerPen, Signs.X, grids);
-                _secondPlayer = new HumanPlayer(pens.PlayerPen, Signs.O, grids);
+                _firstPlayer = new HumanPlayer(pens.PlayerPen, _humanSign, grids);
+                _secondPlayer = new HumanPlayer(pens.PlayerPen, _humanSign.GetOtherSign(), grids);
                 SubscribeToCells();
                 break;
             case MatchSettings.PCvsPC:

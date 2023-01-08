@@ -96,7 +96,7 @@ MonoBehaviour:
   _selectLine:
     _lineRenderers:
     - {fileID: 5819870994354460444}
-    _duration: 0.007
+    _duration: 0.35
 --- !u!1001 &913936771347139914
 PrefabInstance:
   m_ObjectHideFlags: 0

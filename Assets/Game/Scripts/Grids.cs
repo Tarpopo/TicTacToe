@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
-using Random = System.Random;
 
 public class Grids : ManagerBase, IStart
 {
@@ -42,6 +41,7 @@ public class Grid
 
     public Cell[] Cells => _cells;
     public Cell RandomFreeCell => _cells.Where(cell => cell.Sign == null).GetRandomElement();
+    public bool CellsExist => _cells.Any(cell => cell.Sign == null);
     public Signs?[] Signs => _cells.Select(cell => cell.Sign).ToArray();
     [SerializeField] private GameObject _grid;
     [SerializeField] private Cell[] _cells;
@@ -50,6 +50,13 @@ public class Grid
     {
         GridSize = size;
         WinCombination = new WinCombination(size);
+    }
+
+    public bool TryGetMiddleCell(out Cell middleCell)
+    {
+        var cell = _cells[_cells.Length / 2];
+        middleCell = cell;
+        return cell.Sign == null;
     }
 
     public void SetActive(bool active) => _grid.SetActive(active);
