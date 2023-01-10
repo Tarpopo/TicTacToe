@@ -18,7 +18,7 @@ public record AIPlayer : BasePlayer
     private Cell GetCell(int stepsCount)
     {
         if (_grid.TryGetMiddleCell(out var cell)) return cell;
-        if (stepsCount <= _grid.GridSize / 2) return GetRandomCell();
+        if (stepsCount < _grid.GridSize / 2) return GetRandomCell();
         return _grid.GridSize <= 3 ? GetCalculatingCell() : GetRandomCell();
     }
 
